@@ -1,3 +1,5 @@
+#!/bin/bash
+#
 # Script to install Ubuntu on Chromebooks
 # 
 # Copyright 2012-2013 Jay Lee
@@ -9,6 +11,11 @@
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root" 1>&2
    exit 1
+fi
+
+if [ ! $BASH_VERSION ];then
+  echo "This script must be run in bash"
+  exit 1
 fi
 
 # fw_type will always be developer for Mario.
