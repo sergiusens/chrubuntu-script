@@ -225,14 +225,6 @@ mount -o bind /sys /tmp/urfs/sys
 chmod a+rx /tmp/urfs/usr/bin/cgpt
 cp /etc/resolv.conf /tmp/urfs/etc/
 echo chrubuntu > /tmp/urfs/etc/hostname
-echo -e "127.0.0.1       localhost
-127.0.1.1       chrubuntu
-# The following lines are desirable for IPv6 capable hosts
-::1     localhost ip6-localhost ip6-loopback
-fe00::0 ip6-localnet
-ff00::0 ip6-mcastprefix
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters" > /tmp/urfs/etc/hosts
 
 cr_install="wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 add-apt-repository \"deb http://dl.google.com/linux/chrome/deb/ stable main\"
@@ -263,7 +255,7 @@ add-apt-repository universe
 add-apt-repository restricted
 add-apt-repository multiverse 
 apt-get update
-apt-get -y install $ubuntu_metapackage
+apt-get -y install libnss-myhostname $ubuntu_metapackage
 $cr_install
 if [ -f /usr/lib/lightdm/lightdm-set-defaults ]
 then
