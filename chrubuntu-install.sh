@@ -304,7 +304,7 @@ vbutil_kernel --pack newkern \
     --vmlinuz /boot/vmlinuz-`uname -r` \
     --arch $vbutil_arch
 
-dd if=newkern of=${target_kern}
+dd if=newkern of=${target_kern} bs=4M
 
 #Set Ubuntu kernel partition as top priority for next boot (and next boot only)
 cgpt add -i 6 -P 5 -T 1 ${target_disk}
