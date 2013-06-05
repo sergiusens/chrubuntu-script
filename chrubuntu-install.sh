@@ -251,9 +251,7 @@ then
 fi
 
 add_apt_repository_package='software-properties-common'
-ubuntu_major_version=${ubuntu_version:0:2}
-ubuntu_minor_version=${ubuntu_version:3:2}
-if [ $ubuntu_major_version -le 12 ] && [ $ubuntu_minor_version -lt 10 ]
+if [ $ubuntu_version -lt 1210 ]
 then
   add_apt_repository_package='python-software-properties'
 fi
