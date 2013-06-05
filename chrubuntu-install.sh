@@ -222,13 +222,6 @@ mount -o bind /dev /tmp/urfs/dev
 mount -o bind /dev/pts /tmp/urfs/dev/pts
 mount -o bind /sys /tmp/urfs/sys
 
-if [ -f /usr/bin/old_bins/cgpt ]
-then
-  cp /usr/bin/old_bins/cgpt /tmp/urfs/usr/bin/
-else
-  cp /usr/bin/cgpt /tmp/urfs/usr/bin/
-fi
-
 chmod a+rx /tmp/urfs/usr/bin/cgpt
 cp /etc/resolv.conf /tmp/urfs/etc/
 echo chrubuntu > /tmp/urfs/etc/hostname
@@ -281,14 +274,28 @@ chmod a+x /tmp/urfs/install-ubuntu.sh
 chroot /tmp/urfs /bin/bash -c /install-ubuntu.sh
 rm /tmp/urfs/install-ubuntu.sh
 
-KERN_VER=`uname -r`
-mkdir -p /tmp/urfs/lib/modules/$KERN_VER/
-cp -ar /lib/modules/$KERN_VER/* /tmp/urfs/lib/modules/$KERN_VER/
-if [ ! -d /tmp/urfs/lib/firmware/ ]
+if [ $ubuntu_version -lt 1304 ] # pre-raring
 then
-  mkdir /tmp/urfs/lib/firmware/
+	if [ -f /usr/bin/old_bins/cgpt ]
+	then
+		cp /usr/bin/old_bins/cgpt /tmp/urfs/usr/bin/
+	else
+		cp /usr/bin/cgpt /tmp/urfs/usr/bin/
+	fi
+	KERN_VER=`uname -r`
+	mkdir -p /tmp/urfs/lib/modules/$KERN_VER/
+	cp -ar /lib/modules/$KERN_VER/* /tmp/urfs/lib/modules/$KERN_VER/
+	if [ ! -d /tmp/urfs/lib/firmware/ ]
+	then
+	mkdir /tmp/urfs/lib/firmware/
+	fi
+	cp -ar /lib/firmware/* /tmp/urfs/lib/firmware/
+else
+	echo "apt-get -y install cgpt linux-image-chromebook vboot-kernel-utils xserver-xorg-video-armsoc" >/tmp/urfs/install-ubuntu.sh
+	chmod a+x /tmp/urfs/install-ubuntu.sh
+	chroot /tmp/urfs /bin/bash -c /install-ubuntu.sh
+	rm /tmp/urfs/install-ubuntu.sh
 fi
-cp -ar /lib/firmware/* /tmp/urfs/lib/firmware/
 
 echo "console=tty1 debug verbose root=${target_rootfs} rootwait rw lsm.module_locking=0" > kernel-config
 vbutil_arch="x86"
