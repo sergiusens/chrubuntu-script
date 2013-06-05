@@ -1,3 +1,10 @@
+# Script to install Ubuntu on Chromebooks
+# 
+# Copyright 2012-2013 Jay Lee
+#
+# here would be nice to have some license - BSD one maybe
+#
+
 # fw_type will always be developer for Mario.
 # Alex and ZGB need the developer BIOS installed though.
 fw_type="`crossystem mainfw_type`"
