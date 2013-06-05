@@ -211,6 +211,10 @@ then
   ubuntu_version=`wget --quiet -O - http://changelogs.ubuntu.com/meta-release-development | grep "^Version:" | tail -1 | sed -r 's/^Version: ([^ ]+)( LTS)?$/\1/'`
   tar_file="http://cdimage.ubuntu.com/ubuntu-core/daily/current/$ubuntu_codename-core-$ubuntu_arch.tar.gz"
 fi
+
+# convert $ubuntu_version from 13.04 to 1304
+$ubuntu_version=`echo $ubuntu_version | sed -e 's/\.//g'`
+
 wget -O - $tar_file | tar xzvvp -C /tmp/urfs/
 
 mount -o bind /proc /tmp/urfs/proc
