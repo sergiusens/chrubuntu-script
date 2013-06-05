@@ -290,11 +290,16 @@ then
 	mkdir /tmp/urfs/lib/firmware/
 	fi
 	cp -ar /lib/firmware/* /tmp/urfs/lib/firmware/
+
+	kernel=/boot/vmlinuz-`uname -r`
 else
 	echo "apt-get -y install cgpt linux-image-chromebook vboot-kernel-utils xserver-xorg-video-armsoc" >/tmp/urfs/install-ubuntu.sh
 	chmod a+x /tmp/urfs/install-ubuntu.sh
 	chroot /tmp/urfs /bin/bash -c /install-ubuntu.sh
 	rm /tmp/urfs/install-ubuntu.sh
+
+	# valid for raring, so far also for saucy but will change
+	kernel=/tmp/urfs/boot/vmlinuz-3.4.0-5-chromebook
 fi
 
 echo "console=tty1 debug verbose root=${target_rootfs} rootwait rw lsm.module_locking=0" > kernel-config
@@ -308,7 +313,7 @@ vbutil_kernel --pack newkern \
     --version 1 \
     --signprivate /usr/share/vboot/devkeys/kernel_data_key.vbprivk \
     --config kernel-config \
-    --vmlinuz /boot/vmlinuz-`uname -r` \
+    --vmlinuz $kernel \
     --arch $vbutil_arch
 
 dd if=newkern of=${target_kern} bs=4M
