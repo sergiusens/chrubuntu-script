@@ -5,6 +5,12 @@
 # here would be nice to have some license - BSD one maybe
 #
 
+# make sure that we have root permissions
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
 # fw_type will always be developer for Mario.
 # Alex and ZGB need the developer BIOS installed though.
 fw_type="`crossystem mainfw_type`"
