@@ -274,6 +274,25 @@ then
 	else
 		cp /usr/bin/cgpt /tmp/urfs/usr/bin/
 	fi
+else
+	echo "apt-get -y install cgpt vboot-kernel-utils" >/tmp/urfs/install-ubuntu.sh
+
+	if [ $ubuntu_arch = "armhf" ]
+	then
+		echo "apt-get -y install linux-image-chromebook xserver-xorg-video-armsoc" >>/tmp/urfs/install-ubuntu.sh
+
+		# valid for raring, so far also for saucy but will change
+		kernel=/tmp/urfs/boot/vmlinuz-3.4.0-5-chromebook
+	fi
+
+	chmod a+x /tmp/urfs/install-ubuntu.sh
+	chroot /tmp/urfs /bin/bash -c /install-ubuntu.sh
+	rm /tmp/urfs/install-ubuntu.sh
+fi
+
+# we do not have kernel for x86 chromebooks in archive at all
+# and ARM one only in 13.04 and later
+if [ $ubuntu_arch != "armhf" -o $ubuntu_version -lt 1304 ]
 	KERN_VER=`uname -r`
 	mkdir -p /tmp/urfs/lib/modules/$KERN_VER/
 	cp -ar /lib/modules/$KERN_VER/* /tmp/urfs/lib/modules/$KERN_VER/
@@ -284,14 +303,6 @@ then
 	cp -ar /lib/firmware/* /tmp/urfs/lib/firmware/
 
 	kernel=/boot/vmlinuz-`uname -r`
-else
-	echo "apt-get -y install cgpt linux-image-chromebook vboot-kernel-utils xserver-xorg-video-armsoc" >/tmp/urfs/install-ubuntu.sh
-	chmod a+x /tmp/urfs/install-ubuntu.sh
-	chroot /tmp/urfs /bin/bash -c /install-ubuntu.sh
-	rm /tmp/urfs/install-ubuntu.sh
-
-	# valid for raring, so far also for saucy but will change
-	kernel=/tmp/urfs/boot/vmlinuz-3.4.0-5-chromebook
 fi
 
 echo "console=tty1 debug verbose root=${target_rootfs} rootwait rw lsm.module_locking=0" > kernel-config
