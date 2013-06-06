@@ -229,7 +229,6 @@ mount -o bind /dev /tmp/urfs/dev
 mount -o bind /dev/pts /tmp/urfs/dev/pts
 mount -o bind /sys /tmp/urfs/sys
 
-chmod a+rx /tmp/urfs/usr/bin/cgpt
 cp /etc/resolv.conf /tmp/urfs/etc/
 echo chrubuntu > /tmp/urfs/etc/hostname
 
@@ -277,9 +276,9 @@ if [ $ubuntu_version -lt 1304 ] # pre-raring
 then
 	if [ -f /usr/bin/old_bins/cgpt ]
 	then
-		cp /usr/bin/old_bins/cgpt /tmp/urfs/usr/bin/
+		cp -p /usr/bin/old_bins/cgpt /tmp/urfs/usr/bin/
 	else
-		cp /usr/bin/cgpt /tmp/urfs/usr/bin/
+		cp -p /usr/bin/cgpt /tmp/urfs/usr/bin/
 	fi
 else
 	echo "apt-get -y --force-yes install cgpt vboot-kernel-utils" >/tmp/urfs/install-ubuntu.sh
