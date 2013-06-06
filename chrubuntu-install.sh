@@ -222,7 +222,7 @@ fi
 # convert $ubuntu_version from 13.04 to 1304
 $ubuntu_version=`echo $ubuntu_version | sed -e 's/\.//g'`
 
-wget -O - $tar_file | tar xzvvp -C /tmp/urfs/
+wget -O - $tar_file | tar xzp -C /tmp/urfs/
 
 mount -o bind /proc /tmp/urfs/proc
 mount -o bind /dev /tmp/urfs/dev
