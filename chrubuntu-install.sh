@@ -300,12 +300,13 @@ fi
 # we do not have kernel for x86 chromebooks in archive at all
 # and ARM one only in 13.04 and later
 if [ $ubuntu_arch != "armhf" -o $ubuntu_version -lt 1304 ]
+then
 	KERN_VER=`uname -r`
 	mkdir -p /tmp/urfs/lib/modules/$KERN_VER/
 	cp -ar /lib/modules/$KERN_VER/* /tmp/urfs/lib/modules/$KERN_VER/
 	if [ ! -d /tmp/urfs/lib/firmware/ ]
 	then
-	mkdir /tmp/urfs/lib/firmware/
+	  mkdir /tmp/urfs/lib/firmware/
 	fi
 	cp -ar /lib/firmware/* /tmp/urfs/lib/firmware/
 
