@@ -282,7 +282,7 @@ then
 		cp /usr/bin/cgpt /tmp/urfs/usr/bin/
 	fi
 else
-	echo "apt-get -y install cgpt vboot-kernel-utils" >/tmp/urfs/install-ubuntu.sh
+	echo "apt-get -y --force-yes install cgpt vboot-kernel-utils" >/tmp/urfs/install-ubuntu.sh
 
 	if [ $ubuntu_arch = "armhf" ]
 	then
