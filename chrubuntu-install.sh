@@ -285,6 +285,26 @@ else
 
 	if [ $ubuntu_arch = "armhf" ]
 	then
+		cat > /tmp/urfs/usr/share/X11/xorg.conf.d/exynos5.conf <<EOZ
+Section "Device"
+        Identifier      "Mali FBDEV"
+        Driver          "armsoc"
+        Option          "fbdev"                 "/dev/fb0"
+        Option          "Fimg2DExa"             "false"
+        Option          "DRI2"                  "true"
+        Option          "DRI2_PAGE_FLIP"        "false"
+        Option          "DRI2_WAIT_VSYNC"       "true"
+#       Option          "Fimg2DExaSolid"        "false"
+#       Option          "Fimg2DExaCopy"         "false"
+#       Option          "Fimg2DExaComposite"    "false"
+        Option          "SWcursorLCD"           "false"
+EndSection
+Section "Screen"
+        Identifier      "DefaultScreen"
+        Device          "Mali FBDEV"
+        DefaultDepth    24
+EndSection
+EOZ
 		echo "apt-get -y install --no-install-recommends linux-image-chromebook xserver-xorg-video-armsoc" >>/tmp/urfs/install-ubuntu.sh
 
 		# valid for raring, so far also for saucy but will change
