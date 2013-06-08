@@ -285,7 +285,7 @@ else
 
 	if [ $ubuntu_arch = "armhf" ]
 	then
-		echo "apt-get -y install linux-image-chromebook xserver-xorg-video-armsoc" >>/tmp/urfs/install-ubuntu.sh
+		echo "apt-get -y install --no-install-recommends linux-image-chromebook xserver-xorg-video-armsoc" >>/tmp/urfs/install-ubuntu.sh
 
 		# valid for raring, so far also for saucy but will change
 		kernel=/tmp/urfs/boot/vmlinuz-3.4.0-5-chromebook
