@@ -272,6 +272,13 @@ chmod a+x /tmp/urfs/install-ubuntu.sh
 chroot /tmp/urfs /bin/bash -c /install-ubuntu.sh
 rm /tmp/urfs/install-ubuntu.sh
 
+# Keep CrOS partitions from showing/mounting in Ubuntu
+udev_target=${target_disk:5}
+echo -e "KERNEL==\"$udev_target1\" ENV{UDISKS_IGNORE}=\"1\"
+KERNEL==\"$udev_target3\" ENV{UDISKS_IGNORE}=\"1\"
+KERNEL==\"$udev_target5\" ENV{UDISKS_IGNORE}=\"1\"
+KERNEL==\"$udev_target8\" ENV{UDISKS_IGNORE}=\"1\"" > /tmp/urfs/etc/udev/rules.d/99-hide-disks.rules
+
 if [ $ubuntu_version -lt 1304 ] # pre-raring
 then
 	if [ -f /usr/bin/old_bins/cgpt ]
