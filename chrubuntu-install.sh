@@ -305,6 +305,14 @@ Section "Screen"
         DefaultDepth    24
 EndSection
 EOZ
+                cat > /tmp/urfs/usr/share/X11/xorg.conf.d/touchpad.conf <<EOZ
+Section "InputClass"
+        Identifier "touchpad"
+        MatchIsTouchpad "on"
+        Option "FingerHigh" "5"
+        Option "FingerLow" "5"
+EndSection
+EOZ
 		echo "apt-get -y install --no-install-recommends linux-image-chromebook xserver-xorg-video-armsoc" >>/tmp/urfs/install-ubuntu.sh
 
 		# valid for raring, so far also for saucy but will change
