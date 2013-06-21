@@ -76,7 +76,7 @@ else
     while :
     do
       read -p "Enter the size in gigabytes you want to reserve for Ubuntu. Acceptable range is 5 to $max_ubuntu_size  but $rec_ubuntu_size is the recommended maximum: " ubuntu_size
-      if [ ! $ubuntu_size -ne 0 2>/dev/null ]
+      if [ ! $ubuntu_size -ne -1 2>/dev/null ]
       then
         echo -e "\n\nNumbers only please...\n\n"
         continue
