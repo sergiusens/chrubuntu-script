@@ -79,7 +79,7 @@ else
         echo -e "\n\nNumbers only please...\n\n"
         continue
       fi
-      if [ $ubuntu_size -lt 5 -o $ubuntu_size -gt $max_ubuntu_size ]
+      if [ $ubuntu_size -lt 0 -o $ubuntu_size -gt $max_ubuntu_size ]
       then
         echo -e "\n\nThat number is out of range. Enter a number 5 through $max_ubuntu_size\n\n"
         continue
