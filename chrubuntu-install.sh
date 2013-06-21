@@ -90,11 +90,17 @@ else
     done
     # We've got our size in GB for ROOT-C so do the math...
 
-    #calculate sector size for rootc
-    rootc_size=$(($ubuntu_size*1024*1024*2))
+    if [ "$ubuntu_size" = "0" ]
+    then
+      rootc_size=1
+      kernc_size=1
+    else
+      #calculate sector size for rootc
+      rootc_size=$(($ubuntu_size*1024*1024*2))
 
-    #kernc is always 16mb
-    kernc_size=32768
+      #kernc is always 16mb
+      kernc_size=32768
+    fi
 
     #new stateful size with rootc and kernc subtracted from original
     stateful_size=$(($state_size - $rootc_size - $kernc_size))
