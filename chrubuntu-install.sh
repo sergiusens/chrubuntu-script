@@ -118,14 +118,19 @@ else
     echo -e "you should re-run this script..."
     umount -f /mnt/stateful_partition
     
+    # kill old parts
+    cgpt add -i 1 -t unused ${target_disk}
+    cgpt add -i 6 -t unused ${target_disk}
+    cgpt add -i 7 -t unused ${target_disk}
+    
     # stateful first
-    cgpt add -i 1 -b $stateful_start -s $stateful_size -l STATE ${target_disk}
+    cgpt add -i 1 -b $stateful_start -s $stateful_size -t data -l STATE ${target_disk}
 
     # now kernc
-    cgpt add -i 6 -b $kernc_start -s $kernc_size -l KERN-C ${target_disk}
+    cgpt add -i 6 -b $kernc_start -s $kernc_size -t kernel -l KERN-C ${target_disk}
 
     # finally rootc
-    cgpt add -i 7 -b $rootc_start -s $rootc_size -l ROOT-C ${target_disk}
+    cgpt add -i 7 -b $rootc_start -s $rootc_size -t rootfs -l ROOT-C ${target_disk}
 
     reboot
     exit
