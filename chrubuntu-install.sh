@@ -68,7 +68,7 @@ else
   stateful_start="`cgpt show -i 1 -n -b -q ${target_disk}`"
   broot_start="`cgpt show -i 5 -n -b -q ${target_disk}`"
 
-  max_ubuntu_size=$((($stateful_start-$broot_start)/1024/1024/2))
+  max_ubuntu_size=$((($broot_start-$stateful_start)/1024/1024/2))
   rec_ubuntu_size=$(($max_ubuntu_size - 1))
   # If KERN-C and ROOT-C are one, we partition, otherwise assume they're what they need to be...
   if [ "$ckern_size" =  "1" -o "$croot_size" = "1" -o "$1" = "repart" ]
