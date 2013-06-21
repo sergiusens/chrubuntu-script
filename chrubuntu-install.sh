@@ -103,7 +103,7 @@ else
     fi
 
     #new stateful size with rootc and kernc subtracted from original
-    stateful_size=$(($state_size - $rootc_size - $kernc_size))
+    stateful_size=$((($broot_start - $stateful_start) - $rootc_size - $kernc_size))
 
     #start kernc at stateful start plus stateful size
     kernc_start=$(($stateful_start + $stateful_size))
