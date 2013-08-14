@@ -137,6 +137,11 @@ else
   fi
 fi
 
+if [ ! -z "$4" ]; then
+    user=$4
+    echo "Setting default user to $user"
+fi
+
 # hwid lets us know if this is a Mario (Cr-48), Alex (Samsung Series 5), ZGB (Acer), etc
 hwid="`crossystem hwid`"
 
@@ -257,10 +262,10 @@ then
   add_apt_repository_package='python-software-properties'
 fi
 
-echo -e "useradd -m user
-echo user | echo user:user | chpasswd
-adduser user adm
-adduser user sudo
+echo -e "useradd -m $user
+echo user | echo $user:$user | chpasswd
+adduser $user adm
+adduser $user sudo
 apt-get -y update
 apt-get -y dist-upgrade
 apt-get -y install ubuntu-minimal
@@ -275,7 +280,7 @@ apt-get -y install libnss-myhostname $ubuntu_metapackage
 $cr_install
 if [ -f /usr/lib/lightdm/lightdm-set-defaults ]
 then
-  /usr/lib/lightdm/lightdm-set-defaults --autologin user
+  /usr/lib/lightdm/lightdm-set-defaults --autologin $user
 fi" > /tmp/urfs/install-ubuntu.sh
 
 chmod a+x /tmp/urfs/install-ubuntu.sh
@@ -386,7 +391,7 @@ sudo cgpt add -i 6 -P 5 -S 1 ${target_disk}
 
 To make it the default boot option. The ChrUbuntu login is:
 
-Username:  user
+Username:  $user
 Password:  user
 
 We're now ready to start ChrUbuntu!
