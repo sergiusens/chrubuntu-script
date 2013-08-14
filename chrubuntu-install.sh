@@ -139,8 +139,10 @@ fi
 
 if [ ! -z "$4" ]; then
     user=$4
-    echo "Setting default user to $user"
+else
+    user="user"
 fi
+echo "Setting default user to $user"
 
 # hwid lets us know if this is a Mario (Cr-48), Alex (Samsung Series 5), ZGB (Acer), etc
 hwid="`crossystem hwid`"
